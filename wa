@@ -1,0 +1,167 @@
+import 'package:flutter/material.dart';
+
+class MainPage extends StatefulWidget {
+  @override
+  _MainPageState createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 4,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Whatsapp"),
+          backgroundColor: Colors.green,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.search,
+                color: Colors.white,
+              ),
+              onPressed: null,
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.settings,
+                color: Colors.white,
+              ),
+              onPressed: null,
+            )
+          ],
+          bottom: TabBar(
+            indicatorColor: Colors.white,
+            tabs: <Widget>[
+              Tab(
+                icon: Icon(Icons.photo_camera),
+              ),
+              Tab(
+                text: "CHATS",
+              ),
+              Tab(
+                text: "STATUS",
+              ),
+              Tab(
+                text: "CALLS",
+              )
+            ],
+          ),
+        ),
+        body: Container(
+          margin: EdgeInsets.fromLTRB(5.0, .0, 5.0, 0.0),
+          child: TabBarView(
+            children: <Widget>[
+              Center(
+                child: Text("CAMERA"),
+              ),
+              Stack(
+                children: <Widget>[
+                  ListView(
+                    children: loadChat(context),
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.fromLTRB(
+                            MediaQuery.of(context).size.width - 80.0,
+                            .0,
+                            .0,
+                            10.0),
+                        child: FloatingActionButton(
+                          child: Icon(Icons.add),
+                          onPressed: null,
+                          backgroundColor: Colors.green,
+                          elevation: 7.0,
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              Center(
+                child: Text("STATUS"),
+              ),
+              Center(
+                child: Text("CALLS"),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  List<Widget> loadChat(BuildContext context) {
+    List<Widget> listWidget = [];
+
+    for (var i = 0; i < 15; i++)
+      listWidget.add(makeChatWidget(
+          context,
+          "https://m.media-amazon.com/images/M/MV5BMjUzZTJmZDItODRjYS00ZGRhLTg2NWQtOGE0YjJhNWVlMjNjXkEyXkFqcGdeQXVyMTg4NDI0NDM@._V1_UY317_CR51,0,214,317_AL_.jpg",
+          "Gal Gadot",
+          "Halo apa kabar? oke oke aja.",
+          DateTime.now()));
+
+    return listWidget;
+  }
+
+  Row makeChatWidget(BuildContext context, String url, String name,
+      String description, DateTime time) {
+    return Row(
+      children: <Widget>[
+        Container(
+          width: 50.0,
+          height: 50.0,
+          child: Image.network(
+            url,
+            fit: BoxFit.cover,
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.fromLTRB(5.0, 5.0, .0, 5.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        name,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700, fontSize: 18.0),
+                      ),
+                      Container(
+                          margin: EdgeInsets.fromLTRB(.0, .0, .0, 5.0),
+                          width: MediaQuery.of(context).size.width - 200.0,
+                          child: Text(
+                            description,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(color: Colors.grey),
+                          ))
+                    ],
+                  ),
+                  Text(time.day.toString() +
+                      "/" +
+                      time.month.toString() +
+                      "/" +
+                      time.year.toString())
+                ],
+              ),
+              Container(
+                color: Colors.grey,
+                height: 1.0,
+                width: MediaQuery.of(context).size.width - 100.0,
+              )
+            ],
+          ),
+        )
+      ],
+    );
+  }
+}
